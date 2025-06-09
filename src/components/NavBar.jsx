@@ -1,3 +1,4 @@
+import { BowArrow } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const NavBar = () => {
@@ -58,7 +59,7 @@ const NavBar = () => {
           </ul>
         </div>
 
-        <a className="btn btn-ghost text-xl">GoAthlete</a>
+        <a className="btn btn-ghost text-xl"> <BowArrow />GoAthlete</a>
       </div>
 
       <div className="navbar-center hidden lg:flex">
