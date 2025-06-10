@@ -66,6 +66,9 @@ const NavBar = () => {
           <li>
             <NavLink to="/eventspage">Events Page</NavLink>
           </li>
+           <li>
+            <NavLink to="/createEvents">Create Events</NavLink>
+          </li>
           </ul>
         </div>
 
@@ -82,6 +85,9 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink to="/eventspage">Events Page</NavLink>
+          </li>
+          <li>
+            <NavLink to="/create-events">Create Events</NavLink>
           </li>
         </ul>
       </div>
