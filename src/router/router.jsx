@@ -3,6 +3,7 @@ import HomeLayout from "../layouts/HomeLayout";
 import Home from "../pages/Home";
 import LogInPage from "../pages/LogInPage";
 import RegistrationPage from "../pages/RegistrationPage";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,12 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegistrationPage></RegistrationPage>,
+  },
+  {
+
+    path: "*",
+    element:<ErrorPage></ErrorPage>,
+  
   },
 ]);
 export default router;
