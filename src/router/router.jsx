@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import LogInPage from "../pages/LogInPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import ErrorPage from "../pages/ErrorPage";
+import EventPage from "../pages/EventPage";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home></Home>,
+      },
+      {
+        path: "/eventspage",
+        element: <EventPage></EventPage>,
       },
     ],
   },
@@ -25,10 +30,8 @@ const router = createBrowserRouter([
     element: <RegistrationPage></RegistrationPage>,
   },
   {
-
     path: "*",
-    element:<ErrorPage></ErrorPage>,
-  
+    element: <ErrorPage></ErrorPage>,
   },
 ]);
 export default router;

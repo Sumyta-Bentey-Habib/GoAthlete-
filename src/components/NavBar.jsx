@@ -36,7 +36,6 @@ const NavBar = () => {
       console.error("Logout error:", error);
     }
   };
-
   return (
     <div className="sticky top-0 z-50 shadow-sm navbar bg-base-100 rounded-3xl">
       <div className="navbar-start">
@@ -62,22 +61,11 @@ const NavBar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Home</a>
-            </li>
-            <li>
-              <a>Categories</a>
-              <ul className="p-2">
-                <li>
-                  <a>Training</a>
-                </li>
-                <li>
-                  <a>Nutrition</a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a>Contact</a>
-            </li>
+            <NavLink to="/">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/eventspage">Events Page</NavLink>
+          </li>
           </ul>
         </div>
 
@@ -90,23 +78,10 @@ const NavBar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Home</a>
+            <NavLink to="/">Home</NavLink>
           </li>
           <li>
-            <details>
-              <summary>Categories</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Training</a>
-                </li>
-                <li>
-                  <a>Nutrition</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a>Contact</a>
+            <NavLink to="/eventspage">Events Page</NavLink>
           </li>
         </ul>
       </div>
@@ -136,11 +111,14 @@ const NavBar = () => {
             >
               <li>
                 <a className="justify-between">
-                  {user.displayName || "Profile"}
+                 Book Event 
                 </a>
               </li>
               <li>
-                <a>{user.email}</a>
+                <a>My Bookings</a>
+              </li>
+               <li>
+                <a>Manage Events</a>
               </li>
               <li>
                 <a onClick={handleLogout} className="cursor-pointer">
