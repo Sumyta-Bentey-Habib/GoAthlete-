@@ -4,13 +4,13 @@ import Home from "../pages/Home";
 import LogInPage from "../pages/LogInPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import ErrorPage from "../pages/ErrorPage";
-import EventPage from "../pages/EventPage";
-import CreateEvents from "../pages/CreataEvents"; 
+import CreateEvents from "../pages/CreataEvents";
 import AllEvents from "../pages/AllEvents";
+import EventDetails from "../pages/EventDetails";
 
 const fetchEvents = async () => {
   try {
-    const response = await fetch('http://localhost:3000/events');
+    const response = await fetch("http://localhost:3000/events");
     if (!response.ok) {
       console.error(`HTTP error! status: ${response.status}`);
       return [];
@@ -32,13 +32,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: fetchEvents,   
+        loader: fetchEvents,
         element: <Home />,
-      },
-      {
-        path: "eventspage",
-         loader: fetchEvents, 
-        element: <EventPage />,
       },
       {
         path: "create-events",
@@ -46,9 +41,27 @@ const router = createBrowserRouter([
       },
       {
         path: "all-events",
-        loader: fetchEvents,   
+        loader: fetchEvents,
         element: <AllEvents />,
       },
+      {
+  path: "events/:id",
+  element: <EventDetails />,
+  loader: async ({ params }) => {
+    try {
+      const res = await fetch(`http://localhost:3000/events/${params.id}`);
+      if (!res.ok) {
+        throw new Error("Event not found");
+      }
+      return res.json();
+    } catch (error) {
+      console.error("EventDetails loader failed:", error);
+      throw new Response("Not Found", { status: 404 });
+    }
+  },
+},
+
+     
     ],
   },
   {

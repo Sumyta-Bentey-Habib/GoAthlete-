@@ -73,12 +73,15 @@ try {
             required
             className="w-full border px-3 py-2 rounded"
           >
-            <option value="">Select Event Type</option>
-            <option value="Swimming">Swimming</option>
-            <option value="Sprinting">Sprinting</option>
-            <option value="Long Jump">Long Jump</option>
-            <option value="High Jump">High Jump</option>
-            <option value="Hurdle Race">Hurdle Race</option>
+            <option value="" className='text-blue-900 text-2xl'>Select Event Type</option>
+            <option value="Swimming" className='text-blue-900'>Swimming</option>
+            <option value="Sprinting" className='text-blue-900'>Sprinting</option>
+            <option value="Long Jump" className='text-blue-900'>Long Jump</option>
+            <option value="High Jump" className='text-blue-900'>High Jump</option>
+            <option value="Hurdle Race" className='text-blue-900'>Hurdle Race</option>
+            <option value=" Archery" className='text-blue-900'> Archery</option>
+            <option value="others" className='text-blue-900'> Others</option>
+
           </select>
         </div>
 
