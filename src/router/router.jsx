@@ -7,6 +7,7 @@ import ErrorPage from "../pages/ErrorPage";
 import CreateEvents from "../pages/CreataEvents";
 import AllEvents from "../pages/AllEvents";
 import EventDetails from "../pages/EventDetails";
+import MyBookings from "../pages/MyBookings";
 
 const fetchEvents = async () => {
   try {
@@ -60,6 +61,11 @@ const router = createBrowserRouter([
     }
   },
 },
+{
+    path:"/my-bookings",
+    element:<MyBookings></MyBookings>
+
+  },
 
      
     ],
@@ -72,6 +78,7 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegistrationPage />,
   },
+  
 ]);
 
 export default router;

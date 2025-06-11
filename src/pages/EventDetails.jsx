@@ -1,26 +1,86 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
-import { CalendarDays, User, PlusCircle, Clock } from "lucide-react";
+import { CalendarDays, User, PlusCircle, Clock, CheckCircle } from "lucide-react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../contexts/AuthContext/AuthProvider";
 
 const EventDetails = () => {
   const event = useLoaderData();
+  const { user } = useContext(AuthContext);
+  const [isBooked, setIsBooked] = useState(false);
+
+  const { _id, eventName, image, description, creatorName, eventDate } = event || {};
+
+  // Check if the event is already booked by the user
+  useEffect(() => {
+    const fetchBookings = async () => {
+      if (user?.email && _id) {
+        const res = await fetch(`http://localhost:3000/bookings?email=${user.email}`);
+        const data = await res.json();
+        const alreadyBooked = data.some((b) => b.eventId === _id);
+        setIsBooked(alreadyBooked);
+      }
+    };
+
+    fetchBookings();
+  }, [user, _id]);
+
+  const handleAddToList = async () => {
+    const currentDate = new Date();
+    const eventD = new Date(eventDate);
+
+    if (eventD < currentDate) {
+      return Swal.fire({
+        title: "Expired Event",
+        text: "You cannot add a past event.",
+        icon: "error",
+        confirmButtonColor: "#EF4444",
+      });
+    }
+
+    const booking = {
+      eventId: _id,
+      eventName,
+      image,
+      description,
+      creatorName,
+      eventDate,
+      email: user?.email,
+    };
+
+    const res = await fetch("http://localhost:3000/bookings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(booking),
+    });
+
+    const data = await res.json();
+
+    if (data.insertedId) {
+      Swal.fire({
+        title: "Event Added!",
+        text: `${eventName} has been added to your list.`,
+        icon: "success",
+        confirmButtonColor: "#7C3AED",
+      });
+      setIsBooked(true);
+    } else {
+      Swal.fire({
+        title: "Already Added",
+        text: "You have already added this event.",
+        icon: "info",
+        confirmButtonColor: "#3B82F6",
+      });
+    }
+  };
 
   if (!event) {
-    return <p className="text-center mt-10 text-gray-500">Loading event details...</p>;
+    return (
+      <p className="text-center mt-10 text-gray-500">
+        Loading event details...
+      </p>
+    );
   }
-
-  const { eventName, image, description, creatorName, eventDate } = event;
-
-  const handleAddToList = () => {
-    Swal.fire({
-      title: "Event Added!",
-      text: `${eventName} has been added to your list.`,
-      icon: "success",
-      confirmButtonColor: "#7C3AED",
-      confirmButtonText: "Awesome!",
-    });
-  };
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg hover:shadow-2xl transition duration-300 space-y-6">
@@ -48,15 +108,31 @@ const EventDetails = () => {
           </p>
         </div>
 
-        <p className="text-gray-700 text-base leading-relaxed">{description}</p>
+        <p className="text-gray-700 text-base leading-relaxed">
+          {description}
+        </p>
       </div>
 
       <button
         onClick={handleAddToList}
-        className="flex items-center gap-2 px-6 py-3 bg-violet-500 text-white font-semibold rounded-lg hover:bg-violet-600 transition duration-200"
+        disabled={isBooked}
+        className={`flex items-center gap-2 px-6 py-3 font-semibold rounded-lg transition duration-200 ${
+          isBooked
+            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+            : "bg-violet-500 text-white hover:bg-violet-600"
+        }`}
       >
-        <PlusCircle className="w-5 h-5" />
-        Add to My Event List
+        {isBooked ? (
+          <>
+            <CheckCircle className="w-5 h-5" />
+            Already Added
+          </>
+        ) : (
+          <>
+            <PlusCircle className="w-5 h-5" />
+            Add to My Event List
+          </>
+        )}
       </button>
     </div>
   );

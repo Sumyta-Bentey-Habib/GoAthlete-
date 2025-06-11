@@ -52,10 +52,8 @@ const Footer = () => {
               <NavLink to="/" className="hover:text-green-300">
                 Home
               </NavLink>
-              <NavLink to="/trainers" className="hover:text-green-300">
-                Trainers
-              </NavLink>
-              <NavLink to="/programs" className="hover:text-green-300">
+             
+              <NavLink to="/all-events" className="hover:text-green-300">
                 Programs
               </NavLink>
             </ul>
@@ -64,28 +62,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-3 invisible md:visible">
               &nbsp;
             </h3>
-            <ul className="space-y-2 text-sm text-gray-300">
-              <NavLink to="/about" className="hover:text-green-300">
-                About
-              </NavLink>
-              <NavLink to="/community" className="hover:text-green-300">
-                Community
-              </NavLink>
-            </ul>
           </div>
-        </div>
-        <div className="w-full md:w-1/4">
-          <h3 className="text-lg font-semibold mb-3 text-green-400">
-            Join Our Newsletter
-          </h3>
-          <input
-            type="email"
-            placeholder="Enter your email..."
-            className="w-full px-4 py-2 mb-3 border rounded-full outline-none text-white"
-          />
-          <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded-full w-full">
-            Subscribe →
-          </button>
         </div>
       </div>
 

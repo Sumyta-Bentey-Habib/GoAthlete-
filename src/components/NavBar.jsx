@@ -1,7 +1,7 @@
 import { BowArrow } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom"; // <-- Correct import here
 
 const NavBar = () => {
   const [theme, setTheme] = useState("light");
@@ -9,11 +9,12 @@ const NavBar = () => {
   const auth = getAuth();
 
   useEffect(() => {
+    // Load theme from localStorage or default to 'light'
     const storedTheme = localStorage.getItem("theme") || "light";
     setTheme(storedTheme);
     document.documentElement.setAttribute("data-theme", storedTheme);
 
-    // Firebase auth listener
+    // Firebase auth listener for login/logout state changes
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) setUser(firebaseUser);
       else setUser(null);
@@ -36,6 +37,7 @@ const NavBar = () => {
       console.error("Logout error:", error);
     }
   };
+
   return (
     <div className="sticky top-0 z-50 shadow-sm navbar bg-base-100 rounded-3xl">
       <div className="navbar-start">
@@ -61,19 +63,18 @@ const NavBar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-            <NavLink to="/">Home</NavLink>
-          </li>
-          <li>
-            <NavLink to="/all-events"> Events Page</NavLink>
-          </li>
-           <li>
-            <NavLink to="/createEvents">Create Events</NavLink>
-          </li>
-         
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/all-events">Events Page</NavLink>
+            </li>
+            <li>
+              <NavLink to="/create-events">Create Events</NavLink>
+            </li>
           </ul>
         </div>
 
-        <a className="btn btn-ghost text-xl">
+        <a className="btn btn-ghost text-xl flex items-center gap-2">
           <BowArrow />
           GoAthlete
         </a>
@@ -84,8 +85,8 @@ const NavBar = () => {
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
-           <li>
-            <NavLink to="/all-events"> Events Page</NavLink>
+          <li>
+            <NavLink to="/all-events">Events Page</NavLink>
           </li>
           <li>
             <NavLink to="/create-events">Create Events</NavLink>
@@ -94,7 +95,7 @@ const NavBar = () => {
       </div>
 
       <div className="navbar-end flex items-center gap-2">
-        {/* If user is logged in show avatar dropdown */}
+        {/* User logged in avatar dropdown */}
         {user ? (
           <div className="dropdown dropdown-end">
             <div
@@ -117,14 +118,14 @@ const NavBar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">
-                 Book Event 
-                </a>
+                <NavLink to="/all-events" className="justify-between">
+                  Book Event
+                </NavLink>
               </li>
               <li>
-                <a>My Bookings</a>
+                <NavLink to="/my-bookings">My Bookings</NavLink>
               </li>
-               <li>
+              <li>
                 <a>Manage Events</a>
               </li>
               <li>
@@ -136,33 +137,39 @@ const NavBar = () => {
           </div>
         ) : (
           <>
-           
             <NavLink to="/login">
-             <button  
-              className="btn  btn-sm"
-            >
-              Login
-            </button>
+              <button className="btn btn-sm">Login</button>
             </NavLink>
 
             <NavLink to="/register">
-             <button
-              
-              className="btn btn-primary btn-sm"
-            >
-              Register
-            </button>
+              <button className="btn btn-primary btn-sm">Register</button>
             </NavLink>
-           
           </>
         )}
-        <button onClick={toggleTheme} className="btn btn-ghost">
+
+        {/* Theme toggle button */}
+        <button
+          onClick={toggleTheme}
+          className="btn btn-ghost"
+          style={{ color: "inherit" }} // ensures icon inherits text color and is visible
+          aria-label="Toggle Theme"
+        >
           {theme === "light" ? (
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path d="M10 3.25a.75.75 0 01.75.75v1a.75.75 0 01-1.5 0v-1A.75.75 0 0110 3.25zm4.47 2.03a.75.75 0 011.06 1.06l-.71.7a.75.75 0 01-1.06-1.06l.71-.7zM16.75 10a.75.75 0 01-.75.75h-1a.75.75 0 010-1.5h1a.75.75 0 01.75.75zm-2.53 4.72a.75.75 0 10-1.06 1.06l.7.71a.75.75 0 101.06-1.06l-.7-.71zM10 15.75a.75.75 0 01.75.75v1a.75.75 0 01-1.5 0v-1a.75.75 0 01.75-.75zm-4.72-1.53a.75.75 0 10-1.06 1.06l.71.7a.75.75 0 001.06-1.06l-.7-.7zM4.25 10a.75.75 0 01.75.75h-1a.75.75 0 010-1.5h1a.75.75 0 01-.75.75zm2.53-4.72a.75.75 0 10-1.06-1.06l-.71.7a.75.75 0 001.06 1.06l.71-.7zM10 6a4 4 0 100 8 4 4 0 000-8z" />
             </svg>
           ) : (
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path d="M17.293 13.293A8 8 0 116.707 2.707a8.003 8.003 0 0010.586 10.586z" />
             </svg>
           )}
