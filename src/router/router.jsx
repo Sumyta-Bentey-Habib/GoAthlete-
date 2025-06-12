@@ -49,7 +49,9 @@ const router = createBrowserRouter([
       },
       {
         path: "events/:id",
-        element: <EventDetails />,
+        element:(<PrivateRoute><EventDetails /></PrivateRoute>
+        ),
+      
         loader: async ({ params }) => {
           try {
             const res = await fetch(
