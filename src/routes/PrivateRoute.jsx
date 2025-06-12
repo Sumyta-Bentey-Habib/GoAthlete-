@@ -1,12 +1,13 @@
-import React, { use } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
-import { Navigate, useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router-dom"; 
 
 const PrivateRoute = ({ children }) => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext); // Corrected hook
   const location = useLocation();
+
   if (!user) {
-    return <Navigate to="/login" state={location.pathname}></Navigate>;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;

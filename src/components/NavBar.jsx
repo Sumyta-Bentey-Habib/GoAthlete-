@@ -126,7 +126,7 @@ const NavBar = () => {
                 <NavLink to="/my-bookings">My Bookings</NavLink>
               </li>
               <li>
-                <a>Manage Events</a>
+                <NavLink to="/my-events">My Created Events</NavLink>
               </li>
               <li>
                 <a onClick={handleLogout} className="cursor-pointer">
