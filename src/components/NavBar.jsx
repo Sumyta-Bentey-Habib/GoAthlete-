@@ -1,7 +1,7 @@
 import { BowArrow } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { NavLink } from "react-router-dom"; // <-- Correct import here
+import { NavLink } from "react-router-dom"; 
 
 const NavBar = () => {
   const [theme, setTheme] = useState("light");

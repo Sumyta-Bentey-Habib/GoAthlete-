@@ -5,7 +5,7 @@ import loginAnimation from "../assets/lottie/login.json";
 import { AuthContext } from "../contexts/AuthContext/AuthProvider"; 
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import { NavLink } from "react-router-dom";
 const LogInPage = () => {
   const { googleLogin, signInUser } = useContext(AuthContext); 
   const navigate = useNavigate();
@@ -142,7 +142,7 @@ const LogInPage = () => {
 
           <p className="text-sm text-center text-gray-500">
             Don’t have an account?
-            <a href="#" className="text-violet-600 hover:underline ml-1">Sign up</a>
+            <NavLink  to ="/register" className="text-violet-600 hover:underline ml-1">Sign up</NavLink>
           </p>
         </div>
       </div>

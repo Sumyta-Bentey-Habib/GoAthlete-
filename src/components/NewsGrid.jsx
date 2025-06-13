@@ -73,7 +73,7 @@ const NewsGrid = () => {
   return (
     <>
       <div className="max-w-screen-xl mx-auto px-5 py-10 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold  mb-8">
           <Typewriter
             words={["Explore News!", "Know More"]}
             loop={true}

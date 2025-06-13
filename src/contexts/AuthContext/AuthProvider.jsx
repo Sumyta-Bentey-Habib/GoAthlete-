@@ -7,6 +7,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.init";
+import Loading from "../../components/Loading";
 
 
 export const AuthContext = createContext(null);
@@ -14,6 +15,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -48,7 +50,13 @@ const AuthProvider = ({ children }) => {
     signInUser,
     googleLogin,
   };
-
+if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <AuthContext.Provider value={authInfo}>
       {children}

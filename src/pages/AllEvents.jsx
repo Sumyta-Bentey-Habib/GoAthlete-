@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import EventCard from '../components/EventCard';
+import Loading from '../components/Loading';
 
 const AllEvents = () => {
   const initialEvent = useLoaderData();
@@ -16,7 +17,9 @@ const AllEvents = () => {
             <EventCard eve={eve} key={eve._id} />
           ))
         ) : (
-          <p>No events found or loading...</p>
+          <p>
+            <Loading></Loading>
+          </p>
         )}
       </div>
     </div>

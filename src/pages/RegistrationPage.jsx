@@ -3,8 +3,9 @@ import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import registrationAnimation from "../assets/lottie/registration.json";
 import { FcGoogle } from "react-icons/fc";
-import { AuthContext } from "../contexts/AuthContext/AuthProvider"; 
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext/AuthProvider";
+import { useNavigate, NavLink } from "react-router-dom";
+import { updateProfile } from "firebase/auth"; 
 
 const RegistrationPage = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const RegistrationPage = () => {
     photoURL: "",
     password: "",
   });
+
   const { createUser, googleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -48,18 +50,17 @@ const RegistrationPage = () => {
       return;
     }
 
-   
     createUser(email, password)
       .then((result) => {
-        return result.user.updateProfile({
+        return updateProfile(result.user, {
           displayName: name,
           photoURL: photoURL,
-        }).then(() => result);
+        }).then(() => result.user); 
       })
-      .then((result) => {
+      .then((user) => {
         Swal.fire(
           "Success",
-          `Registration completed! Welcome, ${result.user.displayName}`,
+          `Registration completed! Welcome, ${user.displayName}`,
           "success"
         );
         setFormData({
@@ -68,13 +69,12 @@ const RegistrationPage = () => {
           photoURL: "",
           password: "",
         });
-        navigate("/"); 
+        navigate("/");
       })
       .catch((error) => {
         Swal.fire("Registration Failed", error.message, "error");
       });
   };
-
 
   const handleGoogleLogin = () => {
     googleLogin()
@@ -98,19 +98,17 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center  px-4 py-10">
-   
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-10">
       <div className="w-full max-w-md mb-6">
         <Lottie animationData={registrationAnimation} loop={true} className="w-full h-64" />
       </div>
 
-
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
-        <h1 className="text-3xl font-bold text-center text-gray-800">Register</h1>
+        <h1 className="text-3xl font-bold text-center text-black">Register</h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="name" className="block text-sm text-gray-600">Name</label>
+            <label htmlFor="name" className="block text-sm text-black">Name</label>
             <input
               type="text"
               name="name"
@@ -123,7 +121,7 @@ const RegistrationPage = () => {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm text-gray-600">Email</label>
+            <label htmlFor="email" className="block text-sm text-black">Email</label>
             <input
               type="email"
               name="email"
@@ -136,7 +134,7 @@ const RegistrationPage = () => {
           </div>
 
           <div>
-            <label htmlFor="photoURL" className="block text-sm text-gray-600">Profile Picture URL</label>
+            <label htmlFor="photoURL" className="block text-sm text-black">Profile Picture URL</label>
             <input
               type="text"
               name="photoURL"
@@ -149,7 +147,7 @@ const RegistrationPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm text-gray-600">Password</label>
+            <label htmlFor="password" className="block text-sm text-black">Password</label>
             <input
               type="password"
               name="password"
@@ -159,7 +157,7 @@ const RegistrationPage = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-violet-400"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-black mt-1">
               Must be at least 6 characters, with uppercase and lowercase letters.
             </p>
           </div>
@@ -189,9 +187,12 @@ const RegistrationPage = () => {
           </button>
         </div>
 
-        <p className="text-sm text-center text-gray-500">
+        <p className="text-sm text-center text-black">
           Already have an account?
-          <a href="/login" className="text-violet-600 hover:underline ml-1">Login</a>
+          <NavLink to="/login" className="text-violet-600 hover:underline ml-1">Login</NavLink>
+          <br />
+          <br />
+          <NavLink to="/" className="text-violet-600 hover:underline ml-1">Return Home</NavLink>
         </p>
       </div>
     </div>
