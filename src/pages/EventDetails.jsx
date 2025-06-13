@@ -1,21 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
-import { CalendarDays, User, PlusCircle, Clock, CheckCircle } from "lucide-react";
+import {
+  CalendarDays,
+  User,
+  PlusCircle,
+  Clock,
+  CheckCircle,
+} from "lucide-react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthContext/AuthProvider";
 
 const EventDetails = () => {
+  useEffect(() => {
+    document.title = "Event Details || GoAthlete";
+  }, []);
   const event = useLoaderData();
   const { user } = useContext(AuthContext);
   const [isBooked, setIsBooked] = useState(false);
 
-  const { _id, eventName, image, description, creatorName, eventDate } = event || {};
+  const { _id, eventName, image, description, creatorName, eventDate } =
+    event || {};
 
   // Check if the event is already booked by the user
   useEffect(() => {
     const fetchBookings = async () => {
       if (user?.email && _id) {
-        const res = await fetch(`http://localhost:3000/bookings?email=${user.email}`);
+        const res = await fetch(
+          `http://localhost:3000/bookings?email=${user.email}`
+        );
         const data = await res.json();
         const alreadyBooked = data.some((b) => b.eventId === _id);
         setIsBooked(alreadyBooked);
@@ -108,9 +120,7 @@ const EventDetails = () => {
           </p>
         </div>
 
-        <p className="text-gray-700 text-base leading-relaxed">
-          {description}
-        </p>
+        <p className="text-gray-700 text-base leading-relaxed">{description}</p>
       </div>
 
       <button

@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import EventCard from '../components/EventCard';
-import Loading from '../components/Loading';
+import React, { useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
+import EventCard from "../components/EventCard";
+import Loading from "../components/Loading";
 
 const AllEvents = () => {
+  useEffect(() => {
+    document.title = "All Events || GoAthlete";
+  }, []);
   const initialEvent = useLoaderData();
   const [events, setEvents] = useState(initialEvent);
 
   console.log("Events in AllEvents:", events);
 
   return (
-    <div className='flex justify-center items-center'>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 m-10'>
+    <div className="flex justify-center items-center">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 m-10">
         {events && events.length > 0 ? (
-          events.map((eve) => (
-            <EventCard eve={eve} key={eve._id} />
-          ))
+          events.map((eve) => <EventCard eve={eve} key={eve._id} />)
         ) : (
           <p>
             <Loading></Loading>

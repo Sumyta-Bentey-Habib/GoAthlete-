@@ -4,6 +4,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 const MyCreatedEvents = () => {
+  useEffect(() => {
+    document.title = " MyCreated Events || GoAthlete";
+  }, []);
+
   const [events, setEvents] = useState([]);
   const [editingEvent, setEditingEvent] = useState(null);
   const auth = getAuth();
@@ -51,8 +55,15 @@ const MyCreatedEvents = () => {
     };
 
     try {
-      await axios.put(`http://localhost:3000/events/${editingEvent._id}`, updatedEvent);
-      setEvents(events.map((e) => e._id === editingEvent._id ? { ...e, ...updatedEvent } : e));
+      await axios.put(
+        `http://localhost:3000/events/${editingEvent._id}`,
+        updatedEvent
+      );
+      setEvents(
+        events.map((e) =>
+          e._id === editingEvent._id ? { ...e, ...updatedEvent } : e
+        )
+      );
       Swal.fire("Success!", "Event updated successfully.", "success");
       setEditingEvent(null);
     } catch (err) {

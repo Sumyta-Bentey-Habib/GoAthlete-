@@ -1,13 +1,17 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import registrationAnimation from "../assets/lottie/registration.json";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../contexts/AuthContext/AuthProvider";
 import { useNavigate, NavLink } from "react-router-dom";
-import { updateProfile } from "firebase/auth"; 
+import { updateProfile } from "firebase/auth";
 
 const RegistrationPage = () => {
+  useEffect(() => {
+    document.title = "Registration Page || GoAthlete";
+  }, []);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -55,7 +59,7 @@ const RegistrationPage = () => {
         return updateProfile(result.user, {
           displayName: name,
           photoURL: photoURL,
-        }).then(() => result.user); 
+        }).then(() => result.user);
       })
       .then((user) => {
         Swal.fire(
@@ -100,7 +104,11 @@ const RegistrationPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-10">
       <div className="w-full max-w-md mb-6">
-        <Lottie animationData={registrationAnimation} loop={true} className="w-full h-64" />
+        <Lottie
+          animationData={registrationAnimation}
+          loop={true}
+          className="w-full h-64"
+        />
       </div>
 
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
@@ -108,7 +116,9 @@ const RegistrationPage = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="name" className="block text-sm text-black">Name</label>
+            <label htmlFor="name" className="block text-sm text-black">
+              Name
+            </label>
             <input
               type="text"
               name="name"
@@ -121,7 +131,9 @@ const RegistrationPage = () => {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm text-black">Email</label>
+            <label htmlFor="email" className="block text-sm text-black">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -134,7 +146,9 @@ const RegistrationPage = () => {
           </div>
 
           <div>
-            <label htmlFor="photoURL" className="block text-sm text-black">Profile Picture URL</label>
+            <label htmlFor="photoURL" className="block text-sm text-black">
+              Profile Picture URL
+            </label>
             <input
               type="text"
               name="photoURL"
@@ -147,7 +161,9 @@ const RegistrationPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm text-black">Password</label>
+            <label htmlFor="password" className="block text-sm text-black">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -158,7 +174,8 @@ const RegistrationPage = () => {
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-violet-400"
             />
             <p className="text-xs text-black mt-1">
-              Must be at least 6 characters, with uppercase and lowercase letters.
+              Must be at least 6 characters, with uppercase and lowercase
+              letters.
             </p>
           </div>
 
@@ -189,10 +206,14 @@ const RegistrationPage = () => {
 
         <p className="text-sm text-center text-black">
           Already have an account?
-          <NavLink to="/login" className="text-violet-600 hover:underline ml-1">Login</NavLink>
+          <NavLink to="/login" className="text-violet-600 hover:underline ml-1">
+            Login
+          </NavLink>
           <br />
           <br />
-          <NavLink to="/" className="text-violet-600 hover:underline ml-1">Return Home</NavLink>
+          <NavLink to="/" className="text-violet-600 hover:underline ml-1">
+            Return Home
+          </NavLink>
         </p>
       </div>
     </div>

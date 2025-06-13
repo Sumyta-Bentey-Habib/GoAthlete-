@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext/AuthProvider';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "../contexts/AuthContext/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CreateEvents = () => {
+  useEffect(() => {
+    document.title = "Create An Event || GoAthlete";
+  }, []);
   const { user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
   if (loading) return <p>Loading...</p>;
   if (!user) {
-    navigate('/login');
+    navigate("/login");
     return null;
   }
 
@@ -29,11 +32,11 @@ const CreateEvents = () => {
       description,
       image,
       creatorEmail: user.email,
-      creatorName: user.displayName || 'Anonymous',
+      creatorName: user.displayName || "Anonymous",
     };
 
-try {
-      const response = await fetch('http://localhost:3000/events', { 
+    try {
+      const response = await fetch("http://localhost:3000/events", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(eventData),
@@ -49,7 +52,6 @@ try {
     } catch (error) {
       Swal.fire("Error", error.message, "error");
     }
-
   };
 
   return (
@@ -73,15 +75,32 @@ try {
             required
             className="w-full border px-3 py-2 rounded"
           >
-            <option value="" className='text-blue-900 text-2xl'>Select Event Type</option>
-            <option value="Swimming" className='text-blue-900'>Swimming</option>
-            <option value="Sprinting" className='text-blue-900'>Sprinting</option>
-            <option value="Long Jump" className='text-blue-900'>Long Jump</option>
-            <option value="High Jump" className='text-blue-900'>High Jump</option>
-            <option value="Hurdle Race" className='text-blue-900'>Hurdle Race</option>
-            <option value=" Archery" className='text-blue-900'> Archery</option>
-            <option value="others" className='text-blue-900'> Others</option>
-
+            <option value="" className="text-blue-900 text-2xl">
+              Select Event Type
+            </option>
+            <option value="Swimming" className="text-blue-900">
+              Swimming
+            </option>
+            <option value="Sprinting" className="text-blue-900">
+              Sprinting
+            </option>
+            <option value="Long Jump" className="text-blue-900">
+              Long Jump
+            </option>
+            <option value="High Jump" className="text-blue-900">
+              High Jump
+            </option>
+            <option value="Hurdle Race" className="text-blue-900">
+              Hurdle Race
+            </option>
+            <option value=" Archery" className="text-blue-900">
+              {" "}
+              Archery
+            </option>
+            <option value="others" className="text-blue-900">
+              {" "}
+              Others
+            </option>
           </select>
         </div>
 

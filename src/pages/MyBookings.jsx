@@ -4,6 +4,9 @@ import { Trash2, CalendarDays } from "lucide-react";
 import Swal from "sweetalert2";
 
 const MyBookings = () => {
+  useEffect(() => {
+    document.title = "My Bookings || GoAthlete";
+  }, []);
   const { user } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
 
@@ -71,9 +74,7 @@ const MyBookings = () => {
           />
 
           <div className="p-4 space-y-2">
-            <h3 className="text-xl font-semibold text-gray-800">
-              {eventName}
-            </h3>
+            <h3 className="text-xl font-semibold text-gray-800">{eventName}</h3>
             <p className="flex items-center gap-2 text-gray-600 text-sm">
               <CalendarDays className="w-4 h-4 text-violet-500" />
               {formatDate(eventDate)}
@@ -88,7 +89,6 @@ const MyBookings = () => {
           </button>
         </div>
       ))}
-      
     </div>
   );
 };

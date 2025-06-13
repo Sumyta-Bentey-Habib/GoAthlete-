@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
-import errorAnimation from "../assets/lottie/error.json"; 
+import errorAnimation from "../assets/lottie/error.json";
 import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
+  useEffect(() => {
+    document.title = "Error";
+  }, []);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
       <Player

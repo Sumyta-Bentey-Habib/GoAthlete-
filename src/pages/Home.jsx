@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
 import Banner from "../components/Banner";
 import Animated from "../components/Animated";
@@ -6,6 +6,9 @@ import EventCard from "../components/EventCard";
 import NewsGrid from "../components/NewsGrid";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "GoAthlete";
+  }, []);
   const events = useLoaderData();
 
   console.log("Events in Home:", events);
