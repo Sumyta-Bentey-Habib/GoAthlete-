@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import axios from "axios";
 import HomeLayout from "../layouts/HomeLayout";
 import Home from "../pages/Home";
 import LogInPage from "../pages/LogInPage";
@@ -10,6 +11,7 @@ import EventDetails from "../pages/EventDetails";
 import MyBookings from "../pages/MyBookings";
 import MyCreatedEvents from "../pages/MyCreatedEvents";
 import PrivateRoute from "../routes/PrivateRoute";
+
 
 const fetchEvents = async () => {
   try {
@@ -25,6 +27,14 @@ const fetchEvents = async () => {
     console.error("Error fetching events:", error);
     return [];
   }
+};
+
+
+export const allEventsLoader = async ({ request }) => {
+  const url = new URL(request.url);
+  const search = url.searchParams.get("search") || "";
+  const res = await axios.get(`http://localhost:3000/events?search=${search}`);
+  return res.data;
 };
 
 const router = createBrowserRouter([
@@ -48,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "all-events",
-        loader: fetchEvents,
+        loader:allEventsLoader,
         element: <AllEvents />,
       },
       {
