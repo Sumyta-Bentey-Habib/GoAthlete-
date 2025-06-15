@@ -6,6 +6,7 @@ import {
   PlusCircle,
   Clock,
   CheckCircle,
+  LocateFixed,
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthContext/AuthProvider";
@@ -18,7 +19,7 @@ const EventDetails = () => {
   const { user } = useContext(AuthContext);
   const [isBooked, setIsBooked] = useState(false);
 
-  const { _id, eventName, image, description, creatorName, eventDate } =
+  const { _id, eventName, image, description, creatorName, eventDate,eventLocation } =
     event || {};
 
   // Check if the event is already booked by the user
@@ -26,7 +27,7 @@ const EventDetails = () => {
     const fetchBookings = async () => {
       if (user?.email && _id) {
         const res = await fetch(
-          `http://localhost:3000/bookings?email=${user.email}`,
+          ` https://goathlete-server-site.vercel.app/bookings?email=${user.email}`,
           { credentials: "include" }
         );
         const data = await res.json();
@@ -61,8 +62,9 @@ const EventDetails = () => {
       email: user?.email,
     };
 
-    const res = await fetch("http://localhost:3000/bookings", {
+    const res = await fetch(" https://goathlete-server-site.vercel.app/bookings", {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(booking),
     });
@@ -107,6 +109,10 @@ const EventDetails = () => {
         <h1 className="text-4xl font-extrabold text-gray-800 flex items-center gap-2">
           <CalendarDays className="w-6 h-6 text-violet-500" />
           {eventName}
+          <span className="flex items-center gap-1 text-violet-500 text-lg ml-4">
+    <LocateFixed className="w-6 h-6" />
+    {eventLocation || "Unknown Location"}
+  </span>
         </h1>
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 text-gray-600 text-md">

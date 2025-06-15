@@ -7,6 +7,7 @@ const CreateEvents = () => {
   useEffect(() => {
     document.title = "Create An Event || GoAthlete";
   }, []);
+
   const { user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -19,11 +20,13 @@ const CreateEvents = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
+
     const eventName = form.eventName.value;
     const eventType = form.eventType.value;
     const eventDate = form.eventDate.value;
     const description = form.description.value;
     const image = form.image.value;
+    const eventLocation = form.eventLocation.value;
 
     const eventData = {
       eventName,
@@ -31,23 +34,28 @@ const CreateEvents = () => {
       eventDate,
       description,
       image,
+      eventLocation,           // Added location here
       creatorEmail: user.email,
       creatorName: user.displayName || "Anonymous",
     };
 
     try {
-      const response = await fetch("http://localhost:3000/events",  { credentials: "include" }, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(eventData),
-      });
+      const response = await fetch(
+        " https://goathlete-server-site.vercel.app/events",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(eventData),
+        }
+      );
 
       if (response.ok) {
-        Swal.fire("Success", "Event  created successfully!", "success");
+        Swal.fire("Success", "Event created successfully!", "success");
         navigate("/");
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to create group");
+        throw new Error(errorData.message || "Failed to create event");
       }
     } catch (error) {
       Swal.fire("Error", error.message, "error");
@@ -93,12 +101,10 @@ const CreateEvents = () => {
             <option value="Hurdle Race" className="text-blue-900">
               Hurdle Race
             </option>
-            <option value=" Archery" className="text-blue-900">
-              {" "}
+            <option value="Archery" className="text-blue-900">
               Archery
             </option>
             <option value="others" className="text-blue-900">
-              {" "}
               Others
             </option>
           </select>
@@ -130,6 +136,18 @@ const CreateEvents = () => {
             type="url"
             name="image"
             required
+            className="w-full border px-3 py-2 rounded"
+          />
+        </div>
+
+        {/* NEW: Event Location */}
+        <div>
+          <label className="block mb-1">Event Location</label>
+          <input
+            type="text"
+            name="eventLocation"
+            required
+            placeholder="Enter event location"
             className="w-full border px-3 py-2 rounded"
           />
         </div>

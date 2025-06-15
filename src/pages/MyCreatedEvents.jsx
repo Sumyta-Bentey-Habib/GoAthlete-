@@ -16,7 +16,7 @@ const MyCreatedEvents = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:3000/my-events?email=${user.email}`, { withCredentials: true })
+        .get(` https://goathlete-server-site.vercel.app/my-events?email=${user.email}`, { withCredentials: true })
         .then((res) => setEvents(res.data))
         .catch((err) => console.error(err));
     }
@@ -33,7 +33,7 @@ const MyCreatedEvents = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/events/${id}`, { withCredentials: true });
+        await axios.delete(` https://goathlete-server-site.vercel.app/events/${id}`, { withCredentials: true });
         setEvents(events.filter((e) => e._id !== id));
         Swal.fire("Deleted!", "Your event has been deleted.", "success");
       } catch (err) {
@@ -56,7 +56,7 @@ const MyCreatedEvents = () => {
 
     try {
       await axios.put(
-        `http://localhost:3000/events/${editingEvent._id}`,
+        ` https://goathlete-server-site.vercel.app/events/${editingEvent._id}`,
         updatedEvent,
         { withCredentials: true }
       );

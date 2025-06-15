@@ -14,7 +14,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 
 export const fetchEventsLoader = async () => {
   try {
-    const res = await axios.get("http://localhost:3000/events", { withCredentials: true });
+    const res = await axios.get(" https://goathlete-server-site.vercel.app/events", { withCredentials: true });
     console.log("Data fetched successfully in loader:", res.data);
     return res.data;
   } catch (error) {
@@ -27,7 +27,7 @@ export const allEventsLoader = async ({ request }) => {
   const url = new URL(request.url);
   const search = url.searchParams.get("search") || "";
   try {
-    const res = await axios.get(`http://localhost:3000/events?search=${search}`, { withCredentials: true });
+    const res = await axios.get(` https://goathlete-server-site.vercel.app/events?search=${search}`, { withCredentials: true });
     return res.data;
   } catch (error) {
     console.error("Error fetching filtered events:", error);
@@ -37,7 +37,7 @@ export const allEventsLoader = async ({ request }) => {
 
 export const eventDetailsLoader = async ({ params }) => {
   try {
-    const res = await axios.get(`http://localhost:3000/events/${params.id}`, { withCredentials: true });
+    const res = await axios.get(` https://goathlete-server-site.vercel.app/events/${params.id}`, { withCredentials: true });
     return res.data;
   } catch (error) {
     console.error("EventDetails loader failed:", error);

@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await auth.signOut();
-    await axios.post("http://localhost:3000/logout", {}, { withCredentials: true });
+    await axios.post(" https://goathlete-server-site.vercel.app/logout", {}, { withCredentials: true });
     setUser(null);
   };
 
@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser?.email) {
         const userData = { email: currentUser.email };
         axios
-          .post("http://localhost:3000/jwt", userData, { withCredentials: true })
+          .post(" https://goathlete-server-site.vercel.app/jwt", userData, { withCredentials: true })
           .then(res => {
             console.log("JWT set successfully");
           })

@@ -14,7 +14,7 @@ const MyBookings = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/bookings?email=${user.email}`, {
+      fetch(` https://goathlete-server-site.vercel.app/bookings?email=${user.email}`, {
         credentials: "include",
       })
         .then((res) => res.json())
@@ -34,8 +34,9 @@ const MyBookings = () => {
     });
 
     if (confirm.isConfirmed) {
-      const res = await fetch(`http://localhost:3000/bookings/${id}`, {
+      const res = await fetch(` https://goathlete-server-site.vercel.app/bookings/${id}`, {
         method: "DELETE",
+        credentials: "include",
       });
       const data = await res.json();
 
