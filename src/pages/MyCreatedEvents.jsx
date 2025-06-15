@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 
 const MyCreatedEvents = () => {
   useEffect(() => {
-    document.title = " MyCreated Events || GoAthlete";
+    document.title = "MyCreated Events || GoAthlete";
   }, []);
 
   const [events, setEvents] = useState([]);
@@ -16,7 +16,7 @@ const MyCreatedEvents = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:3000/my-events?email=${user.email}`)
+        .get(`http://localhost:3000/my-events?email=${user.email}`, { withCredentials: true })
         .then((res) => setEvents(res.data))
         .catch((err) => console.error(err));
     }
@@ -33,7 +33,7 @@ const MyCreatedEvents = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/events/${id}`);
+        await axios.delete(`http://localhost:3000/events/${id}`, { withCredentials: true });
         setEvents(events.filter((e) => e._id !== id));
         Swal.fire("Deleted!", "Your event has been deleted.", "success");
       } catch (err) {
@@ -57,7 +57,8 @@ const MyCreatedEvents = () => {
     try {
       await axios.put(
         `http://localhost:3000/events/${editingEvent._id}`,
-        updatedEvent
+        updatedEvent,
+        { withCredentials: true }
       );
       setEvents(
         events.map((e) =>

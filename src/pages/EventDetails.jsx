@@ -26,7 +26,8 @@ const EventDetails = () => {
     const fetchBookings = async () => {
       if (user?.email && _id) {
         const res = await fetch(
-          `http://localhost:3000/bookings?email=${user.email}`
+          `http://localhost:3000/bookings?email=${user.email}`,
+          { credentials: "include" }
         );
         const data = await res.json();
         const alreadyBooked = data.some((b) => b.eventId === _id);

@@ -12,29 +12,37 @@ import MyBookings from "../pages/MyBookings";
 import MyCreatedEvents from "../pages/MyCreatedEvents";
 import PrivateRoute from "../routes/PrivateRoute";
 
-
-const fetchEvents = async () => {
+export const fetchEventsLoader = async () => {
   try {
-    const response = await fetch("http://localhost:3000/events");
-    if (!response.ok) {
-      console.error(`HTTP error! status: ${response.status}`);
-      return [];
-    }
-    const data = await response.json();
-    console.log("Data fetched successfully in loader:", data);
-    return data;
+    const res = await axios.get("http://localhost:3000/events", { withCredentials: true });
+    console.log("Data fetched successfully in loader:", res.data);
+    return res.data;
   } catch (error) {
     console.error("Error fetching events:", error);
     return [];
   }
 };
 
-
 export const allEventsLoader = async ({ request }) => {
   const url = new URL(request.url);
   const search = url.searchParams.get("search") || "";
-  const res = await axios.get(`http://localhost:3000/events?search=${search}`);
-  return res.data;
+  try {
+    const res = await axios.get(`http://localhost:3000/events?search=${search}`, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching filtered events:", error);
+    return [];
+  }
+};
+
+export const eventDetailsLoader = async ({ params }) => {
+  try {
+    const res = await axios.get(`http://localhost:3000/events/${params.id}`, { withCredentials: true });
+    return res.data;
+  } catch (error) {
+    console.error("EventDetails loader failed:", error);
+    throw new Response("Not Found", { status: 404 });
+  }
 };
 
 const router = createBrowserRouter([
@@ -45,7 +53,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: fetchEvents,
+        loader: fetchEventsLoader,
         element: <Home />,
       },
       {
@@ -58,39 +66,33 @@ const router = createBrowserRouter([
       },
       {
         path: "all-events",
-        loader:allEventsLoader,
+        loader: allEventsLoader,
         element: <AllEvents />,
       },
       {
         path: "events/:id",
+        loader: eventDetailsLoader,
         element: (
           <PrivateRoute>
             <EventDetails />
           </PrivateRoute>
         ),
-
-        loader: async ({ params }) => {
-          try {
-            const res = await fetch(
-              `http://localhost:3000/events/${params.id}`
-            );
-            if (!res.ok) {
-              throw new Error("Event not found");
-            }
-            return res.json();
-          } catch (error) {
-            console.error("EventDetails loader failed:", error);
-            throw new Response("Not Found", { status: 404 });
-          }
-        },
       },
       {
-        path: "/my-bookings",
-        element: <MyBookings></MyBookings>,
+        path: "my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings />
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/my-events",
-        element: <MyCreatedEvents></MyCreatedEvents>,
+        path: "my-events",
+        element: (
+          <PrivateRoute>
+            <MyCreatedEvents />
+          </PrivateRoute>
+        ),
       },
     ],
   },

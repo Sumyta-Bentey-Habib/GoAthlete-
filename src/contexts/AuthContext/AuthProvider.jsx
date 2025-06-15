@@ -7,15 +7,14 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../../firebase/firebase.init";
+import axios from "axios";
 import Loading from "../../components/Loading";
-
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  
+  const [loading, setLoading] = useState(true);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -33,30 +32,48 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
+  const logout = async () => {
+    await auth.signOut();
+    await axios.post("http://localhost:3000/logout", {}, { withCredentials: true });
+    setUser(null);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+
+      if (currentUser?.email) {
+        const userData = { email: currentUser.email };
+        axios
+          .post("http://localhost:3000/jwt", userData, { withCredentials: true })
+          .then(res => {
+            console.log("JWT set successfully");
+          })
+          .catch(err => console.error(err));
+      }
     });
 
     return () => unsubscribe();
   }, []);
 
-  const authInfo = {
-    loading,
-    createUser,
-    user,
-    setUser,
-    signInUser,
-    googleLogin,
-  };
-if (loading) {
+  if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex justify-center items-center">
         <Loading />
       </div>
     );
   }
+
+  const authInfo = {
+    user,
+    loading,
+    createUser,
+    signInUser,
+    googleLogin,
+    logout,
+  };
+
   return (
     <AuthContext.Provider value={authInfo}>
       {children}

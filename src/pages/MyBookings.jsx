@@ -12,7 +12,7 @@ const MyBookings = () => {
 
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:3000/bookings?email=${user.email}`)
+      fetch(`http://localhost:3000/bookings?email=${user.email}`, { credentials: "include" })
         .then((res) => res.json())
         .then((data) => setBookings(data));
     }
