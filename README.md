@@ -5,6 +5,7 @@
 **GoAthlete** is a modern sports event platform where athletes can **explore**, **create**,**book** and **manage events** for themselves and others. The app is built with **React + Vite** for a fast and efficient development experience.
 
 ---
+---
 
 ## 🚀 Features
 
@@ -14,6 +15,7 @@
 - 🎨 **Beautiful UI** — Enhanced with SweetAlert modals, Typewriter text effects, and Lottie animations.
 - ⚡ **Blazing Fast** — Built with Vite for super-fast development and production builds.
 
+---
 ---
 
 ## ⚙️ Tech Stack
@@ -26,6 +28,7 @@
 - **lottie-react** — Lottie JSON animations integration.
 -**Font**-Ubuntu
 
+---
 ---
 
 ## 📦 NPM Packages Used
