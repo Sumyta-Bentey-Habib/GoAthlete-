@@ -55,7 +55,7 @@
 
 Follow the steps below to run the project on your local machine:
 
-
+```bash
 # Clone the repository
 git clone https://github.com/your-username/goathlete.git
 
