@@ -1,7 +1,7 @@
 import { BowArrow } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   const [theme, setTheme] = useState("light");
@@ -74,9 +74,9 @@ const NavBar = () => {
           </ul>
         </div>
 
-        <a className="btn btn-ghost text-xl flex items-center gap-2">
-          <BowArrow />
-          GoAthlete
+        <a className="btn btn-ghost flex items-center gap-2 text-lg sm:text-xl whitespace-nowrap">
+          <BowArrow className="w-5 h-5 sm:w-6 sm:h-6" />
+          <span className="font-bold">GoAthlete</span>
         </a>
       </div>
 
@@ -154,7 +154,7 @@ const NavBar = () => {
         <button
           onClick={toggleTheme}
           className="btn btn-ghost"
-          style={{ color: "inherit" }} 
+          style={{ color: "inherit" }}
           aria-label="Toggle Theme"
         >
           {theme === "light" ? (
