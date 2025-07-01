@@ -142,12 +142,12 @@ const EventDetails = () => {
         {isBooked ? (
           <>
             <CheckCircle className="w-5 h-5" />
-            Already Added
+            Already Joined
           </>
         ) : (
           <>
             <PlusCircle className="w-5 h-5" />
-            Add to My Event List
+            Join The Action
           </>
         )}
       </button>

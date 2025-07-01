@@ -102,16 +102,18 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md mb-6">
+    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center px-4 py-10 bg-gray-50">
+      {/* Animation section */}
+      <div className="w-full md:w-1/2 flex justify-center mb-10 md:mb-0">
         <Lottie
           animationData={registrationAnimation}
           loop={true}
-          className="w-full h-64"
+          className="w-full max-w-sm md:max-w-md"
         />
       </div>
 
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
+      {/* Form section */}
+      <div className="w-full md:w-1/2 max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
         <h1 className="text-3xl font-bold text-center text-black">Register</h1>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -209,7 +211,6 @@ const RegistrationPage = () => {
           <NavLink to="/login" className="text-violet-600 hover:underline ml-1">
             Login
           </NavLink>
-          <br />
           <br />
           <NavLink to="/" className="text-violet-600 hover:underline ml-1">
             Return Home

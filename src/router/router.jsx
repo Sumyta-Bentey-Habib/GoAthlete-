@@ -10,6 +10,7 @@ import AllEvents from "../pages/AllEvents";
 import EventDetails from "../pages/EventDetails";
 import MyBookings from "../pages/MyBookings";
 import MyCreatedEvents from "../pages/MyCreatedEvents";
+import AboutUs from "../pages/AboutUs ";
 import PrivateRoute from "../routes/PrivateRoute";
 
 export const fetchEventsLoader = async () => {
@@ -93,6 +94,11 @@ const router = createBrowserRouter([
             <MyCreatedEvents />
           </PrivateRoute>
         ),
+      },
+      {
+        path:"/about-us",
+        element:<AboutUs></AboutUs>,
+
       },
     ],
   },

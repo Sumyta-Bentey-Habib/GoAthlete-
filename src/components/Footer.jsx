@@ -8,30 +8,43 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import logo from "../assets/logo/bow-arrow.png";
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="py-10 px-6 border-t bg-gray-900 text-white">
+    <footer className="py-10 px-6 border-t bg-gray-900 text-gray-300">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 justify-between">
-        <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl w-full md:w-1/4 text-center flex flex-col items-center justify-between gap-4 shadow-lg">
-          <h2 className="text-xl font-bold">🏃‍♂️ GoAthlete</h2>
-          <p className="text-sm">
-            Built for champions. Whether you're training, coaching, or competing
+        {/* Brand / Intro */}
+        <div className="flex-1 md:max-w-xs">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-white rounded-full p-2 shadow-md">
+              <img
+                src={logo}
+                alt="GoAthlete"
+                className="w-10 h-10 object-contain"
+              />
+            </div>
+            <h2 className="text-2xl font-bold text-white">GoAthlete</h2>
+          </div>
+          <p className="text-sm leading-relaxed">
+            Built for champions. Whether you’re training, coaching, or competing
             — GoAthlete gives you the tools to reach peak performance.
           </p>
-          <div className="flex gap-4 text-xl mt-2">
-            <Twitter className="hover:text-gray-300 cursor-pointer" />
-            <Instagram className="hover:text-gray-300 cursor-pointer" />
-            <Linkedin className="hover:text-gray-300 cursor-pointer" />
-            <Youtube className="hover:text-gray-300 cursor-pointer" />
+          <div className="flex gap-4 text-white mt-4">
+            <Twitter className="hover:text-violet-400 cursor-pointer" />
+            <Instagram className="hover:text-violet-400 cursor-pointer" />
+            <Linkedin className="hover:text-violet-400 cursor-pointer" />
+            <Youtube className="hover:text-violet-400 cursor-pointer" />
           </div>
         </div>
-        <div className="w-full md:w-1/4">
-          <h3 className="text-lg font-semibold mb-3 text-green-400">
+
+        {/* Contact Info */}
+        <div className="flex-1 md:max-w-xs">
+          <h3 className="text-lg font-semibold mb-3 text-violet-400">
             Contact Us
           </h3>
-          <ul className="space-y-3 text-sm text-gray-300">
+          <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-2">
               <Mail size={18} /> support@goathlete.com
             </li>
@@ -43,26 +56,21 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="w-full md:w-1/4 flex flex-wrap gap-8">
-          <div>
-            <h3 className="text-lg font-semibold mb-3 text-green-400">
-              Explore
-            </h3>
-            <ul className="space-y-2 text-sm text-gray-300 flex flex-col">
-              <NavLink to="/" className="hover:text-green-300">
-                Home
-              </NavLink>
-             
-              <NavLink to="/all-events" className="hover:text-green-300">
-                Programs
-              </NavLink>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-3 invisible md:visible">
-              &nbsp;
-            </h3>
-          </div>
+
+        {/* Explore Links */}
+        <div className="flex-1 md:max-w-xs">
+          <h3 className="text-lg font-semibold mb-3 text-violet-400">Explore</h3>
+          <ul className="space-y-2 text-sm flex flex-col">
+            <NavLink to="/" className="hover:text-violet-400">
+              Home
+            </NavLink>
+            <NavLink to="/all-events" className="hover:text-violet-400">
+              Programs
+            </NavLink>
+            <NavLink to="/about-us" className="hover:text-violet-400">
+              About Us
+            </NavLink>
+          </ul>
         </div>
       </div>
 

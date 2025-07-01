@@ -161,8 +161,12 @@ const LogInPage = () => {
               to="/register"
               className="text-violet-600 hover:underline ml-1"
             >
-              Sign up
+              Sign up  
             </NavLink>
+            <br />
+            <br />
+            <NavLink to="/" className="text-violet-600 hover:underline ml-1">Go Home</NavLink>
+
           </p>
         </div>
       </div>

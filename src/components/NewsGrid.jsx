@@ -7,7 +7,6 @@ import teenarcher from "../assets/newsimages/teenarcher.jpg";
 import carlosYulo from "../assets/newsimages/Carlos-Yulo.jpg";
 import olympiceco from "../assets/newsimages/olympiceco.jpg";
 import parisolympic from "../assets/newsimages/parisolympic.jpg";
-import { Typewriter } from "react-simple-typewriter";
 
 const NewsGrid = () => {
   const articles = [
@@ -74,15 +73,7 @@ const NewsGrid = () => {
     <>
       <div className="max-w-screen-xl mx-auto px-5 py-10 text-center">
         <h2 className="text-3xl md:text-4xl font-bold  mb-8">
-          <Typewriter
-            words={["Explore News!", "Know More"]}
-            loop={true}
-            cursor
-            cursorStyle="|"
-            typeSpeed={70}
-            deleteSpeed={50}
-            delaySpeed={1000}
-          />
+          Stay Ahead with The Latest Sports Updates!!
         </h2>
       </div>
 

@@ -91,6 +91,9 @@ const NavBar = () => {
           <li>
             <NavLink to="/create-events">Create Events</NavLink>
           </li>
+          <li>
+            <NavLink to="/about-us">About Us</NavLink>
+          </li>
         </ul>
       </div>
 
@@ -138,11 +141,11 @@ const NavBar = () => {
         ) : (
           <>
             <NavLink to="/login">
-              <button className="btn btn-sm">Login</button>
+              <button className="btn btn-sm ">Login</button>
             </NavLink>
 
             <NavLink to="/register">
-              <button className="btn btn-primary btn-sm">Register</button>
+              <button className="btn bg-violet-400 btn-sm">Register</button>
             </NavLink>
           </>
         )}
@@ -151,7 +154,7 @@ const NavBar = () => {
         <button
           onClick={toggleTheme}
           className="btn btn-ghost"
-          style={{ color: "inherit" }} // ensures icon inherits text color and is visible
+          style={{ color: "inherit" }} 
           aria-label="Toggle Theme"
         >
           {theme === "light" ? (
