@@ -1,19 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import bgimage from "../assets/images/bg.jpg";
-import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
-  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (search.trim()) {
-      navigate(`/all-events?search=${encodeURIComponent(search.trim())}`);
-    } else {
-      navigate("/all-events");
-    }
+  const handleExplore = () => {
+    navigate("/all-events"); 
   };
 
   return (
@@ -34,24 +27,12 @@ const Banner = () => {
               Empower your athletic journey with personalized training plans,
               real-time performance tracking, and a community of passionate athletes.
             </p>
-            <form
-              onSubmit={handleSearch}
-              className="flex items-center rounded-full overflow-hidden shadow-lg bg-white"
+            <button
+              onClick={handleExplore}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-300"
             >
-              <input
-                type="text"
-                placeholder="Search for events..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full px-4 py-2 text-black focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="bg-primary text-white p-2 flex items-center justify-center"
-              >
-                <Search />
-              </button>
-            </form>
+              Explore Now
+            </button>
           </div>
         </div>
       </div>
