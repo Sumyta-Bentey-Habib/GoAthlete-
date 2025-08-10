@@ -9,12 +9,10 @@ const NavBar = () => {
   const auth = getAuth();
 
   useEffect(() => {
-    // Load theme from localStorage or default to 'light'
     const storedTheme = localStorage.getItem("theme") || "light";
     setTheme(storedTheme);
     document.documentElement.setAttribute("data-theme", storedTheme);
 
-    // Firebase auth listener for login/logout state changes
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) setUser(firebaseUser);
       else setUser(null);
@@ -32,7 +30,6 @@ const NavBar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      // user will be set to null automatically by listener
     } catch (error) {
       console.error("Logout error:", error);
     }
@@ -41,8 +38,9 @@ const NavBar = () => {
   return (
     <div className="sticky top-0 z-50 shadow-sm navbar bg-base-100 rounded-3xl">
       <div className="navbar-start">
+        {/* Mobile dropdown */}
         <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden" aria-label="Open menu">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -50,12 +48,7 @@ const NavBar = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
           </div>
           <ul
@@ -68,20 +61,41 @@ const NavBar = () => {
             <li>
               <NavLink to="/all-events">Events Page</NavLink>
             </li>
-            <li>
+           
+            {user && (
+              <>
+                <li>
+                  <NavLink to="/my-bookings">My Bookings</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/my-events">My Created Events</NavLink>
+                </li>
+                 <li>
               <NavLink to="/create-events">Create Events</NavLink>
             </li>
+                <li>
+                  <button onClick={handleLogout} className="w-full text-left" type="button">
+                    Logout
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
 
-        <a className="btn btn-ghost flex items-center gap-2 text-lg sm:text-xl whitespace-nowrap">
+        <NavLink
+          to="/"
+          className="btn btn-ghost flex items-center gap-2 text-lg sm:text-xl whitespace-nowrap"
+          aria-label="Go to homepage"
+        >
           <BowArrow className="w-5 h-5 sm:w-6 sm:h-6" />
           <span className="font-bold">GoAthlete</span>
-        </a>
+        </NavLink>
       </div>
 
+      {/* Center menu (desktop) */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 items-center gap-4">
           <li>
             <NavLink to="/">Home</NavLink>
           </li>
@@ -89,59 +103,53 @@ const NavBar = () => {
             <NavLink to="/all-events">Events Page</NavLink>
           </li>
           <li>
-            <NavLink to="/create-events">Create Events</NavLink>
-          </li>
-          <li>
             <NavLink to="/about-us">About Us</NavLink>
           </li>
-        </ul>
-      </div>
 
-      <div className="navbar-end flex items-center gap-2">
-        {/* User logged in avatar dropdown */}
-        {user ? (
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar cursor-pointer"
-            >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="User Avatar"
-                  src={
-                    user.photoURL ||
-                    "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  }
-                />
-              </div>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <NavLink to="/all-events" className="justify-between">
-                  Book Event
-                </NavLink>
-              </li>
+          {user && (
+            <>
+  
               <li>
                 <NavLink to="/my-bookings">My Bookings</NavLink>
               </li>
               <li>
                 <NavLink to="/my-events">My Created Events</NavLink>
               </li>
+               <li>
+              <NavLink to="/create-events">Create Events</NavLink>
+            </li>
               <li>
-                <a onClick={handleLogout} className="cursor-pointer">
+                <button
+                  onClick={handleLogout}
+                  className="btn btn-ghost normal-case"
+                  type="button"
+                >
                   Logout
-                </a>
+                </button>
               </li>
-            </ul>
+            </>
+          )}
+        </ul>
+      </div>
+
+
+      <div className="navbar-end flex items-center gap-2">
+        {user ? (
+          <div className="btn btn-ghost btn-circle avatar cursor-pointer">
+            <div className="w-10 rounded-full overflow-hidden">
+              <img
+                alt={user.displayName || "User Avatar"}
+                src={
+                  user.photoURL ||
+                  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                }
+              />
+            </div>
           </div>
         ) : (
           <>
             <NavLink to="/login">
-              <button className="btn btn-sm ">Login</button>
+              <button className="btn btn-sm">Login</button>
             </NavLink>
 
             <NavLink to="/register">
@@ -150,7 +158,7 @@ const NavBar = () => {
           </>
         )}
 
-        {/* Theme toggle button */}
+    
         <button
           onClick={toggleTheme}
           className="btn btn-ghost"
