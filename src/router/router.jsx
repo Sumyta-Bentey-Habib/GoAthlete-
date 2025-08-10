@@ -74,9 +74,9 @@ const router = createBrowserRouter([
         path: "events/:id",
         loader: eventDetailsLoader,
         element: (
-          <PrivateRoute>
+         
             <EventDetails />
-          </PrivateRoute>
+          
         ),
       },
       {

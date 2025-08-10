@@ -10,24 +10,34 @@ import {
 } from "lucide-react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthContext/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const EventDetails = () => {
   useEffect(() => {
     document.title = "Event Details || GoAthlete";
   }, []);
+
   const event = useLoaderData();
   const { user } = useContext(AuthContext);
   const [isBooked, setIsBooked] = useState(false);
+  const navigate = useNavigate();
 
-  const { _id, eventName, image, description, creatorName, eventDate,eventLocation } =
-    event || {};
+  const {
+    _id,
+    eventName,
+    image,
+    description,
+    creatorName,
+    eventDate,
+    eventLocation,
+  } = event || {};
 
   // Check if the event is already booked by the user
   useEffect(() => {
     const fetchBookings = async () => {
       if (user?.email && _id) {
         const res = await fetch(
-          ` https://goathlete-server-site.vercel.app/bookings?email=${user.email}`,
+          `https://goathlete-server-site.vercel.app/bookings?email=${user.email}`,
           { credentials: "include" }
         );
         const data = await res.json();
@@ -40,6 +50,12 @@ const EventDetails = () => {
   }, [user, _id]);
 
   const handleAddToList = async () => {
+    if (!user) {
+      // Redirect to login if user is not logged in
+      navigate("/login", { state: { from: window.location.pathname } });
+      return;
+    }
+
     const currentDate = new Date();
     const eventD = new Date(eventDate);
 
@@ -59,15 +75,18 @@ const EventDetails = () => {
       description,
       creatorName,
       eventDate,
-      email: user?.email,
+      email: user.email,
     };
 
-    const res = await fetch(" https://goathlete-server-site.vercel.app/bookings", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(booking),
-    });
+    const res = await fetch(
+      "https://goathlete-server-site.vercel.app/bookings",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(booking),
+      }
+    );
 
     const data = await res.json();
 
@@ -91,9 +110,7 @@ const EventDetails = () => {
 
   if (!event) {
     return (
-      <p className="text-center mt-10 text-gray-500">
-        Loading event details...
-      </p>
+      <p className="text-center mt-10 text-gray-500">Loading event details...</p>
     );
   }
 
@@ -110,9 +127,9 @@ const EventDetails = () => {
           <CalendarDays className="w-6 h-6 text-violet-500" />
           {eventName}
           <span className="flex items-center gap-1 text-violet-500 text-lg ml-4">
-    <LocateFixed className="w-6 h-6" />
-    {eventLocation || "Unknown Location"}
-  </span>
+            <LocateFixed className="w-6 h-6" />
+            {eventLocation || "Unknown Location"}
+          </span>
         </h1>
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 text-gray-600 text-md">
@@ -130,27 +147,41 @@ const EventDetails = () => {
         <p className="text-gray-700 text-base leading-relaxed">{description}</p>
       </div>
 
-      <button
-        onClick={handleAddToList}
-        disabled={isBooked}
-        className={`flex items-center gap-2 px-6 py-3 font-semibold rounded-lg transition duration-200 ${
-          isBooked
-            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-            : "bg-violet-500 text-white hover:bg-violet-600"
-        }`}
-      >
-        {isBooked ? (
-          <>
-            <CheckCircle className="w-5 h-5" />
-            Already Joined
-          </>
-        ) : (
-          <>
-            <PlusCircle className="w-5 h-5" />
-            Join The Action
-          </>
-        )}
-      </button>
+      {/* Conditionally render button or login prompt */}
+      {user ? (
+        <button
+          onClick={handleAddToList}
+          disabled={isBooked}
+          className={`flex items-center gap-2 px-6 py-3 font-semibold rounded-lg transition duration-200 ${
+            isBooked
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-violet-500 text-white hover:bg-violet-600"
+          }`}
+        >
+          {isBooked ? (
+            <>
+              <CheckCircle className="w-5 h-5" />
+              Already Joined
+            </>
+          ) : (
+            <>
+              <PlusCircle className="w-5 h-5" />
+              Join The Action
+            </>
+          )}
+        </button>
+      ) : (
+        <p className="text-gray-500 italic">
+          Please{" "}
+          <button
+            onClick={() => navigate("/login", { state: { from: window.location.pathname } })}
+            className="underline text-violet-600 hover:text-violet-800"
+          >
+            log in
+          </button>{" "}
+          to join this event.
+        </p>
+      )}
     </div>
   );
 };
